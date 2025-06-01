@@ -43,62 +43,81 @@ fun ClassicWorkoutScreen(
         }
     } else {
         currentCvik?.let { cvik ->
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color(0xFF004d40))
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
             ) {
-                Text(
-                    text = "Aktuálny cvik: ${cvik.nazov}",
-                    style = MaterialTheme.typography.headlineSmall ,
-                    color = Color.White
-                )
-
-                Text(
-                    text = "Zostávajúci čas: ${remainingTime}s",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Image(
-                    painter = painterResource(
-                        id = if (showPredImage) cvik.obrazokPred else cvik.obrazokPo
-                    ),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp)
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                LinearProgressIndicator(
-                    progress = if (cvik.trvanieAleboOpakovania > 0)
-                        (cvik.trvanieAleboOpakovania - remainingTime).toFloat() / cvik.trvanieAleboOpakovania
-                    else 1f,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .padding(25.dp),
+                    contentAlignment = Alignment.TopStart
                 ) {
-                    Button(onClick = { viewModel.resetWorkout() }) {
-                        Text("Reštartovať tréning")
+                    Button(onClick = {
+                        viewModel.endWorkout()
+                        navController.navigate("menu")
+                    }) {
+                        Text("← Späť", color = Color.White)
                     }
+                }
 
-                    Button(onClick = { viewModel.skipCurrentExercise() }) {
-                        Text("Preskočiť cvik")
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 72.dp, start = 24.dp, end = 24.dp, bottom = 24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
+                ) {
+                    Text(
+                        text = "Aktuálny cvik: ${cvik.nazov}",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = Color.White
+                    )
+
+                    Text(
+                        text = "Zostávajúci čas: ${remainingTime}s",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.White
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Image(
+                        painter = painterResource(
+                            id = if (showPredImage) cvik.obrazokPred else cvik.obrazokPo
+                        ),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    LinearProgressIndicator(
+                        progress = if (cvik.trvanieAleboOpakovania > 0)
+                            (cvik.trvanieAleboOpakovania - remainingTime).toFloat() / cvik.trvanieAleboOpakovania
+                        else 1f,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(10.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Button(onClick = { viewModel.resetWorkout() }) {
+                            Text("Reštartovať tréning")
+                        }
+
+                        Button(onClick = { viewModel.skipCurrentExercise() }) {
+                            Text("Preskočiť cvik")
+                        }
                     }
                 }
             }

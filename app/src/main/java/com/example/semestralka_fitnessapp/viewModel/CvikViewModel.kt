@@ -3,12 +3,12 @@ package com.example.semestralka_fitnessapp.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.semestralka_fitnessapp.data.Cvik
-import com.example.semestralka_fitnessapp.repository.CvikRepository
 import com.example.semestralka_fitnessapp.repository.StatisticsRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.*
+import com.example.semestralka_fitnessapp.repository.CvikRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
@@ -119,5 +119,13 @@ class CvikViewModel(
         } else {
             _workoutFinished.value = true
         }
+    }
+
+    fun endWorkout() {
+        timerJob?.cancel()
+        _workoutFinished.value = true
+        workoutStarted = false
+
+        updateStatistics()
     }
 }
