@@ -17,4 +17,8 @@ interface CvikDao {
 
     @Delete
     suspend fun deleteCvik(cvik: Cvik)
+
+    @Query("DELETE FROM cviky")
+    suspend fun deleteAll()
+
 }

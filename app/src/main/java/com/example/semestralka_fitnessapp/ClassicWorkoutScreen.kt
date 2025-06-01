@@ -89,8 +89,17 @@ fun ClassicWorkoutScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                Button(onClick = { viewModel.resetWorkout() }) {
-                    Text("Reštartovať tréning")
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Button(onClick = { viewModel.resetWorkout() }) {
+                        Text("Reštartovať tréning")
+                    }
+
+                    Button(onClick = { viewModel.skipCurrentExercise() }) {
+                        Text("Preskočiť cvik")
+                    }
                 }
             }
         } ?: run {

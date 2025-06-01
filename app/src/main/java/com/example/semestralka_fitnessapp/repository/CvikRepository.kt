@@ -11,4 +11,8 @@ class CvikRepository(private val dao: CvikDao) {
     suspend fun insert(cvik: Cvik) {
         dao.insertCvik(cvik)
     }
+
+    suspend fun deleteAll() {
+        dao.deleteAll()
+    }
 }

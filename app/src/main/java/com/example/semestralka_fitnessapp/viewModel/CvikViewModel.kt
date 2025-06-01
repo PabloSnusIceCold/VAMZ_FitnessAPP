@@ -110,9 +110,14 @@ class CvikViewModel(
 
     fun getTotalCalories(): Int = totalCalories
 
-    fun addCvik(cvik: Cvik) {
-        viewModelScope.launch {
-            repository.insert(cvik)
+    fun skipCurrentExercise() {
+        if (currentIndex < cviky.value.size - 1) {
+            currentIndex++
+            cviky.value.getOrNull(currentIndex)?.let {
+                startCvik(it)
+            }
+        } else {
+            _workoutFinished.value = true
         }
     }
 }
