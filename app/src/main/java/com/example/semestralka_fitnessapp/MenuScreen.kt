@@ -45,7 +45,7 @@ fun MenuScreen(navController: NavController) {
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(32.dp))
-            Button(onClick = { navController.navigate("autoWorkout") }, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = { navController.navigate("classicWorkout") }, modifier = Modifier.fillMaxWidth()) {
                 Text("Preddefinovaný tréning")
             }
             Spacer(modifier = Modifier.height(16.dp))

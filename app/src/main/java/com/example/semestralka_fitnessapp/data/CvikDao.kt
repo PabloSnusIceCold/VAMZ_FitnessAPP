@@ -1,6 +1,7 @@
 package com.example.semestralka_fitnessapp.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,4 +14,7 @@ interface CvikDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCvik(cvik: Cvik)
+
+    @Delete
+    suspend fun deleteCvik(cvik: Cvik)
 }

@@ -10,5 +10,7 @@ data class Cvik(
     val nazov: String,
     val kategoria: String,
     val trvanieAleboOpakovania: Int,
-    val obrazok: String
+    val obrazokPred: Int,
+    val obrazokPo: Int,
+    val pocetKalorii: Int
 )
