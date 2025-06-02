@@ -1,18 +1,23 @@
 package com.example.semestralka_fitnessapp
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.semestralka_fitnessapp.viewModel.CvikViewModel
 
 @Composable
@@ -28,6 +33,11 @@ fun ClassicWorkoutScreen(
     val workoutFinished by viewModel.workoutFinished
 
     val currentCvik = cviky.getOrNull(currentIndex)
+
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    val scrollState = rememberScrollState()
 
     LaunchedEffect(cviky) {
         if (cviky.isNotEmpty()) {
@@ -48,26 +58,28 @@ fun ClassicWorkoutScreen(
                     .fillMaxSize()
                     .background(Color(0xFF004d40))
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(25.dp),
-                    contentAlignment = Alignment.TopStart
-                ) {
-                    Button(onClick = {
+                // Tlačidlo SPÄŤ - nad všetkým a klikateľné
+                Button(
+                    onClick = {
                         viewModel.endWorkout()
                         navController.navigate("menu")
-                    }) {
-                        Text("← Späť", color = Color.White)
-                    }
+                    },
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(16.dp)
+                        .zIndex(1f)
+                ) {
+                    Text("← Späť", color = Color.White)
                 }
 
+                // Obsah vo vnútri - vertikálne scrollovateľný
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(scrollState)
                         .padding(top = 72.dp, start = 24.dp, end = 24.dp, bottom = 24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     Text(
                         text = "Aktuálny cvik: ${cvik.nazov}",
@@ -97,9 +109,11 @@ fun ClassicWorkoutScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     LinearProgressIndicator(
-                        progress = if (cvik.trvanieAleboOpakovania > 0)
-                            (cvik.trvanieAleboOpakovania - remainingTime).toFloat() / cvik.trvanieAleboOpakovania
-                        else 1f,
+                        progress = {
+                            if (cvik.trvanieAleboOpakovania > 0)
+                                (cvik.trvanieAleboOpakovania - remainingTime).toFloat() / cvik.trvanieAleboOpakovania
+                            else 1f
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(10.dp)
@@ -120,13 +134,6 @@ fun ClassicWorkoutScreen(
                         }
                     }
                 }
-            }
-        } ?: run {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Žiadne cviky k dispozícii.")
             }
         }
     }
