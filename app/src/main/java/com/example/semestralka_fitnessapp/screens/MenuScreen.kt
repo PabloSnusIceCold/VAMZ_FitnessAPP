@@ -1,4 +1,4 @@
-package com.example.semestralka_fitnessapp
+package com.example.semestralka_fitnessapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.semestralka_fitnessapp.R
 
 @Composable
 fun MenuScreen(navController: NavController) {

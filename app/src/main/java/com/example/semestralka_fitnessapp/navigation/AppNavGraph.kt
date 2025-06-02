@@ -1,16 +1,15 @@
 package com.example.semestralka_fitnessapp.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.semestralka_fitnessapp.MenuScreen
-import com.example.semestralka_fitnessapp.ClassicWorkoutScreen
-import com.example.semestralka_fitnessapp.CongratsScreen
-import com.example.semestralka_fitnessapp.CustomWorkoutScreen
-import com.example.semestralka_fitnessapp.WorkoutSelectionScreen
+import com.example.semestralka_fitnessapp.screens.MenuScreen
+import com.example.semestralka_fitnessapp.screens.ClassicWorkoutScreen
+import com.example.semestralka_fitnessapp.screens.CongratsScreen
+import com.example.semestralka_fitnessapp.screens.CustomWorkoutScreen
+import com.example.semestralka_fitnessapp.screens.WorkoutSelectionScreen
 import com.example.semestralka_fitnessapp.repository.CustomWorkoutRepository
 import com.example.semestralka_fitnessapp.repository.CvikRepository
 import com.example.semestralka_fitnessapp.repository.StatisticsRepository

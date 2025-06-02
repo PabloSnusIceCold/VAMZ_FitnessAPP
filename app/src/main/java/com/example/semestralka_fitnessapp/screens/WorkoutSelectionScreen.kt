@@ -1,4 +1,4 @@
-package com.example.semestralka_fitnessapp
+package com.example.semestralka_fitnessapp.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
