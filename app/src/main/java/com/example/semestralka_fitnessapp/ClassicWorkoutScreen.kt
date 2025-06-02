@@ -23,23 +23,23 @@ fun ClassicWorkoutScreen(
     navController: NavController,
     viewModel: CvikViewModel = viewModel()
 ) {
-    val cviky by viewModel.cviky.collectAsState()
-
+    val cviky = viewModel.cviky.value
     val currentIndex = viewModel.currentIndex
     val remainingTime = viewModel.remainingTime
     val showPredImage = viewModel.showPredImage
-    val workoutFinished by viewModel.workoutFinished
+    val workoutFinished = viewModel.workoutFinished.value
 
     val currentCvik = cviky.getOrNull(currentIndex)
-
     val scrollState = rememberScrollState()
 
+    // Spusti tréning pri načítaní cvikov
     LaunchedEffect(cviky) {
         if (cviky.isNotEmpty()) {
             viewModel.startWorkout()
         }
     }
 
+    // Ak je tréning dokončený, prejdi na obrazovku s gratuláciou
     if (workoutFinished) {
         LaunchedEffect(Unit) {
             navController.navigate("congrats/${viewModel.getTotalCalories()}") {
@@ -130,6 +130,13 @@ fun ClassicWorkoutScreen(
                     }
                 }
             }
+        } ?: Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF004d40)),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = Color.White)
         }
     }
 }

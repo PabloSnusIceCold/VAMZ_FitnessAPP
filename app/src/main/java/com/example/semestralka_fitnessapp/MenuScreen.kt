@@ -50,13 +50,17 @@ fun MenuScreen(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { navController.navigate("customWorkout") }, modifier = Modifier.fillMaxWidth()) {
-                Text("Vlastný tréning")
+                Text("Vytvor si vlastný tréning")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = { navController.navigate("customWorkoutPlay") }, modifier = Modifier.fillMaxWidth()) {
+                Text("Spusti vlastný tréning")
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { navController.navigate("challengeWorkout") }, modifier = Modifier.fillMaxWidth()) {
                 Text("Výzvy")
             }
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { navController.navigate("statistics") }, modifier = Modifier.fillMaxWidth()) {
                 Text("Štatistiky")
             }

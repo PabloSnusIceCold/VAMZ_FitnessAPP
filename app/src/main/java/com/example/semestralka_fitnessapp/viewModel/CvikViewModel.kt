@@ -8,20 +8,23 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.*
+import com.example.semestralka_fitnessapp.repository.CustomWorkoutRepository
 import com.example.semestralka_fitnessapp.repository.CvikRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.combine
 
 class CvikViewModel(
-    private val repository: CvikRepository,
-    private val statisticsRepository: StatisticsRepository
+    private val repositoryClassic: CvikRepository,
+    private val repositoryCustom: CustomWorkoutRepository,
+    private val statisticsRepository: StatisticsRepository,
+    private val jeKlasicky: Boolean,
+    private val customWorkoutId: Int? = null // ID konkrétneho custom workoutu, ak je jeKlasicky false
 ) : ViewModel() {
 
-    val cviky = repository.allCviky.stateIn(
-        viewModelScope,
-        SharingStarted.Lazily,
-        emptyList()
-    )
+    // Tento flow bude obsahovať zoznam cvikov, ktoré budeme iterovať
+    private val _cviky = mutableStateOf<List<Cvik>>(emptyList())
+    val cviky: State<List<Cvik>> = _cviky
 
     var currentIndex by mutableStateOf(0)
         private set
@@ -41,6 +44,37 @@ class CvikViewModel(
 
     private val _workoutFinished = mutableStateOf(false)
     val workoutFinished: State<Boolean> = _workoutFinished
+
+    init {
+        viewModelScope.launch {
+            if (jeKlasicky) {
+                repositoryClassic.allCviky.collect { list ->
+                    _cviky.value = list
+                }
+            } else {
+                // custom workout - kombinuj obe kolekcie, aby sa prepočítavali správne
+                combine(
+                    repositoryCustom.getAll(),
+                    repositoryClassic.allCviky
+                ) { workouts, allCviky ->
+                    val customWorkout = workouts.find { it.id == customWorkoutId }
+                    if (customWorkout != null) {
+                        val customCviky = customWorkout.exerciseIds.mapIndexedNotNull { idx, cvikId ->
+                            allCviky.find { it.id == cvikId }?.copy(
+                                trvanieAleboOpakovania = customWorkout.repsOrDurations.getOrNull(idx)
+                                    ?: 0
+                            )
+                        }
+                        customCviky
+                    } else {
+                        emptyList()
+                    }
+                }.collect { list ->
+                    _cviky.value = list
+                }
+            }
+        }
+    }
 
     fun startWorkout() {
         if (workoutStarted) return
@@ -65,7 +99,7 @@ class CvikViewModel(
 
             totalCalories += cvik.pocetKalorii
             totalWorkoutTime += cvik.trvanieAleboOpakovania
-            totalExercisesDone += 1
+            totalExercisesDone++
 
             goToNextCvik()
         }
@@ -118,6 +152,7 @@ class CvikViewModel(
             }
         } else {
             _workoutFinished.value = true
+            updateStatistics()
         }
     }
 

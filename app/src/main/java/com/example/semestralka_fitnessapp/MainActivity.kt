@@ -9,6 +9,7 @@ import androidx.room.Room
 import com.example.semestralka_fitnessapp.data.AppDatabase
 import com.example.semestralka_fitnessapp.data.Cvik
 import com.example.semestralka_fitnessapp.navigation.AppNavGraph
+import com.example.semestralka_fitnessapp.repository.CustomWorkoutRepository
 import com.example.semestralka_fitnessapp.repository.CvikRepository
 import com.example.semestralka_fitnessapp.repository.StatisticsRepository
 import com.example.semestralka_fitnessapp.viewModel.CvikViewModelFactory
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var cvikRepository: CvikRepository
     private lateinit var statisticsRepository: StatisticsRepository
     private lateinit var viewModelFactory: CvikViewModelFactory
+    private lateinit var workoutRepository: CustomWorkoutRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +37,16 @@ class MainActivity : ComponentActivity() {
         // Inicializuj repozitáre
         cvikRepository = CvikRepository(database.cvikDao())
         statisticsRepository = StatisticsRepository(database.statisticsDao())
+        workoutRepository = CustomWorkoutRepository(database.customWorkoutDao())
 
         // Inicializuj factory pre CvikViewModel
-        viewModelFactory = CvikViewModelFactory(cvikRepository, statisticsRepository)
+        viewModelFactory = CvikViewModelFactory(
+            repositoryClassic = cvikRepository,
+            repositoryCustom = workoutRepository,
+            statisticsRepository = statisticsRepository,
+            jeKlasicky = true // alebo false – podľa toho, ktorú verziu chceš predvolene použiť
+        )
+
 
         // Predvolené cviky - vloženie do DB, ak je prázdna
         lifecycleScope.launch {
@@ -77,7 +86,8 @@ class MainActivity : ComponentActivity() {
                 navController = navController,
                 cvikViewModelFactory = viewModelFactory,
                 cvikRepository = cvikRepository,
-                statisticsRepository = statisticsRepository
+                statisticsRepository = statisticsRepository,
+                customWorkoutRepository = workoutRepository
             )
         }
     }

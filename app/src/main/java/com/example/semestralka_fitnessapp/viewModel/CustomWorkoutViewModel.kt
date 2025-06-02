@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.example.semestralka_fitnessapp.data.CustomWorkout
+import com.example.semestralka_fitnessapp.repository.CustomWorkoutRepository
+import kotlinx.coroutines.launch
 
 data class CustomWorkoutExercise(
     val cvik: Cvik,
@@ -15,8 +18,16 @@ data class CustomWorkoutExercise(
 )
 
 class CustomWorkoutViewModel(
-    private val repository: CvikRepository
+    private val repository: CvikRepository,
+    private val customWorkoutRepository: CustomWorkoutRepository
 ) : ViewModel() {
+
+
+    val workoutList = customWorkoutRepository.getAll()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val allCustomWorkouts: StateFlow<List<CustomWorkout>> = customWorkoutRepository.getAll()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val categories: StateFlow<List<String>> = repository.allCviky
         .map { cviky -> cviky.map { it.kategoria }.distinct() }
@@ -34,6 +45,9 @@ class CustomWorkoutViewModel(
     val selectedCvik: StateFlow<Cvik?> = _selectedCvik.asStateFlow()
 
     var repetitionsOrDuration by mutableStateOf("")
+
+    private val _workoutName = MutableStateFlow("")
+    val workoutName: StateFlow<String> = _workoutName.asStateFlow()
 
     private val _customWorkoutList = MutableStateFlow<List<CustomWorkoutExercise>>(emptyList())
     val customWorkoutList: StateFlow<List<CustomWorkoutExercise>> = _customWorkoutList.asStateFlow()
@@ -58,4 +72,24 @@ class CustomWorkoutViewModel(
         repetitionsOrDuration = ""
         _selectedCvik.value = null
     }
+
+    fun saveWorkout(name: String) {
+        val workout = CustomWorkout(
+            name = name,
+            exerciseIds = customWorkoutList.value.map { it.cvik.id },
+            repsOrDurations = customWorkoutList.value.map { it.repetitionsOrDuration }
+        )
+        viewModelScope.launch {
+            customWorkoutRepository.insert(workout)
+        }
+    }
+
+    fun updateWorkoutName(name: String) {
+        _workoutName.value = name
+    }
+
+    fun clearWorkoutName() {
+        _workoutName.value = ""
+    }
+
 }

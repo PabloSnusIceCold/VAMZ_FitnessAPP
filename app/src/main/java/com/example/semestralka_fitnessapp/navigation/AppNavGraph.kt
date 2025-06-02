@@ -1,6 +1,7 @@
 package com.example.semestralka_fitnessapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -9,6 +10,8 @@ import com.example.semestralka_fitnessapp.MenuScreen
 import com.example.semestralka_fitnessapp.ClassicWorkoutScreen
 import com.example.semestralka_fitnessapp.CongratsScreen
 import com.example.semestralka_fitnessapp.CustomWorkoutScreen
+import com.example.semestralka_fitnessapp.WorkoutSelectionScreen
+import com.example.semestralka_fitnessapp.repository.CustomWorkoutRepository
 import com.example.semestralka_fitnessapp.repository.CvikRepository
 import com.example.semestralka_fitnessapp.repository.StatisticsRepository
 import com.example.semestralka_fitnessapp.ui.screens.StatisticsScreen
@@ -24,15 +27,16 @@ fun AppNavGraph(
     navController: NavHostController,
     cvikViewModelFactory: CvikViewModelFactory,
     cvikRepository: CvikRepository,
-    statisticsRepository: StatisticsRepository
-) {
+    statisticsRepository: StatisticsRepository,
+    customWorkoutRepository: CustomWorkoutRepository
+){
     val cvikViewModel: CvikViewModel = viewModel(
         factory = cvikViewModelFactory)
     val statisticsViewModel: StatisticsViewModel = viewModel(
         factory = StatisticsViewModelFactory(statisticsRepository)
     )
     val customWorkoutViewModel: CustomWorkoutViewModel = viewModel(
-        factory = CustomWorkoutViewModelFactory(cvikRepository)
+        factory = CustomWorkoutViewModelFactory(cvikRepository, customWorkoutRepository)
     )
 
     NavHost(navController = navController, startDestination = "menu") {
@@ -47,7 +51,33 @@ fun AppNavGraph(
         }
         composable("customWorkout") {
             CustomWorkoutScreen(
+                navController = navController,
                 viewModel = customWorkoutViewModel
+            )
+        }
+        composable("customWorkoutPlay") {
+            WorkoutSelectionScreen(
+                navController = navController,
+                customWorkoutViewModel = customWorkoutViewModel
+            )
+        }
+        composable("playCustomWorkout/{id}") { backStackEntry ->
+            val workoutId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+
+            val cvikViewModel: CvikViewModel = viewModel(
+                key = "customWorkout_$workoutId",
+                factory = CvikViewModelFactory(
+                    repositoryClassic = cvikRepository,
+                    repositoryCustom = customWorkoutRepository,
+                    statisticsRepository = statisticsRepository,
+                    jeKlasicky = false,
+                    customWorkoutId = workoutId
+                )
+            )
+
+            ClassicWorkoutScreen(
+                navController = navController,
+                viewModel = cvikViewModel
             )
         }
         composable("statistics") {
@@ -63,5 +93,6 @@ fun AppNavGraph(
                 onOkClicked = { navController.navigate("menu") }
             )
         }
+
     }
 }
