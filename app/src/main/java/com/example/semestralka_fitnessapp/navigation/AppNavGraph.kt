@@ -8,22 +8,31 @@ import androidx.navigation.compose.composable
 import com.example.semestralka_fitnessapp.MenuScreen
 import com.example.semestralka_fitnessapp.ClassicWorkoutScreen
 import com.example.semestralka_fitnessapp.CongratsScreen
+import com.example.semestralka_fitnessapp.CustomWorkoutScreen
+import com.example.semestralka_fitnessapp.repository.CvikRepository
 import com.example.semestralka_fitnessapp.repository.StatisticsRepository
 import com.example.semestralka_fitnessapp.ui.screens.StatisticsScreen
 import com.example.semestralka_fitnessapp.viewModel.CvikViewModel
 import com.example.semestralka_fitnessapp.viewModel.CvikViewModelFactory
+import com.example.semestralka_fitnessapp.viewModel.CustomWorkoutViewModel
+import com.example.semestralka_fitnessapp.viewModel.CustomWorkoutViewModelFactory
 import com.example.semestralka_fitnessapp.viewModel.StatisticsViewModel
 import com.example.semestralka_fitnessapp.viewModel.StatisticsViewModelFactory
 
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
-    viewModelFactory: CvikViewModelFactory,
-    statisticsRepository: StatisticsRepository // potrebujeme repozitár pre statistics VM
+    cvikViewModelFactory: CvikViewModelFactory,
+    cvikRepository: CvikRepository,
+    statisticsRepository: StatisticsRepository
 ) {
-    val cvikViewModel: CvikViewModel = viewModel(factory = viewModelFactory)
+    val cvikViewModel: CvikViewModel = viewModel(
+        factory = cvikViewModelFactory)
     val statisticsViewModel: StatisticsViewModel = viewModel(
         factory = StatisticsViewModelFactory(statisticsRepository)
+    )
+    val customWorkoutViewModel: CustomWorkoutViewModel = viewModel(
+        factory = CustomWorkoutViewModelFactory(cvikRepository)
     )
 
     NavHost(navController = navController, startDestination = "menu") {
@@ -34,6 +43,11 @@ fun AppNavGraph(
             ClassicWorkoutScreen(
                 navController = navController,
                 viewModel = cvikViewModel
+            )
+        }
+        composable("customWorkout") {
+            CustomWorkoutScreen(
+                viewModel = customWorkoutViewModel
             )
         }
         composable("statistics") {
@@ -51,4 +65,3 @@ fun AppNavGraph(
         }
     }
 }
-

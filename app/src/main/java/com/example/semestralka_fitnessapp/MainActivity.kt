@@ -36,12 +36,11 @@ class MainActivity : ComponentActivity() {
         cvikRepository = CvikRepository(database.cvikDao())
         statisticsRepository = StatisticsRepository(database.statisticsDao())
 
-        // Inicializuj factory s oboma repozitármi
+        // Inicializuj factory pre CvikViewModel
         viewModelFactory = CvikViewModelFactory(cvikRepository, statisticsRepository)
 
-        // Predvolené cviky
+        // Predvolené cviky - vloženie do DB, ak je prázdna
         lifecycleScope.launch {
-            cvikRepository.deleteAll()
             val cviky = cvikRepository.allCviky.first()
             if (cviky.isEmpty()) {
                 val cvikyNaVlozenie = listOf(
@@ -66,7 +65,6 @@ class MainActivity : ComponentActivity() {
                     Cvik(19, "Stacionárny beh", "Kardio", 60, R.drawable.running, R.drawable.running1, 35),
                     Cvik(20, "Zdvihy kolien v stoji", "Brucho", 30, R.drawable.knee_raise, R.drawable.knee_raise1, 20),
                 )
-
                 for (cvik in cvikyNaVlozenie) {
                     cvikRepository.insert(cvik)
                 }
@@ -75,7 +73,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            AppNavGraph(navController = navController, viewModelFactory = viewModelFactory, statisticsRepository = statisticsRepository)
+            AppNavGraph(
+                navController = navController,
+                cvikViewModelFactory = viewModelFactory,
+                cvikRepository = cvikRepository,
+                statisticsRepository = statisticsRepository
+            )
         }
     }
 }

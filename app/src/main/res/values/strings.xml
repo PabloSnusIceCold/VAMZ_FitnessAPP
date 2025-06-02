@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Semestralka_FitnessAPP</string>
+    <string name="congrats_title">Gratulujeme!</string>
+    <string name="congrats_message">Spálili ste %1$d kalórií za %2$d sekúnd.</string>
+    <string name="ok_button">OK</string>
 </resources>
