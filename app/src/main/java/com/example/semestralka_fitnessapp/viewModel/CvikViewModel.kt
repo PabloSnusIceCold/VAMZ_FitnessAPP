@@ -49,7 +49,7 @@ class CvikViewModel(
         viewModelScope.launch {
             if (jeKlasicky) {
                 repositoryClassic.allCviky.collect { list ->
-                    _cviky.value = list
+                    _cviky.value = list.shuffled().take(10)
                 }
             } else {
                 // custom workout - kombinuj obe kolekcie, aby sa prepočítavali správne

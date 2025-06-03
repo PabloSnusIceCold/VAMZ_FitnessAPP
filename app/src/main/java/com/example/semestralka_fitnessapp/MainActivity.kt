@@ -78,6 +78,30 @@ class MainActivity : ComponentActivity() {
                     cvikRepository.insert(cvik)
                 }
             }
+            val extremneCviky = listOf(
+                Cvik(21, "Pistolske drepy", "Extrémne", 60, R.drawable.pistol_squat, R.drawable.pistol_squat1, 50),
+                Cvik(22, "Kliky na jednej ruke", "Extrémne", 45, R.drawable.one_arm_pushup, R.drawable.one_arm_pushup1, 55),
+                Cvik(23, "Dragon flag", "Extrémne", 40, R.drawable.dragon_flag, R.drawable.dragon_flag1, 60),
+                Cvik(24, "Plank s výskokom", "Extrémne", 50, R.drawable.plank_jump, R.drawable.plank_jump1, 45),
+                Cvik(25, "Burpee s výskokom", "Extrémne", 60, R.drawable.extreme_burpee, R.drawable.extreme_burpee1, 65),
+                Cvik(26, "Zhyby so závažím", "Extrémne", 30, R.drawable.weighted_pullup, R.drawable.weighted_pullup1, 50),
+                Cvik(27, "Kliky s tlesknutím", "Extrémne", 35, R.drawable.clap_pushup, R.drawable.clap_pushup1, 45),
+                Cvik(28, "Drepy na jednej nohe na lavičke", "Extrémne", 50, R.drawable.bulgarian_squat, R.drawable.bulgarian_squat1, 55),
+                Cvik(29, "Hollow body držanie", "Extrémne", 60, R.drawable.hollow_hold, R.drawable.hollow_hold, 40),
+                Cvik(30, "Skákanie cez švihadlo (dvojskoky)", "Extrémne", 60, R.drawable.double_under, R.drawable.double_under1, 60),
+                Cvik(31, "Kliky na bradlách", "Extrémne", 40, R.drawable.dip_bar, R.drawable.dip_bar1, 50),
+                Cvik(32, "Sprinty na mieste", "Extrémne", 45, R.drawable.sprint_in_place, R.drawable.sprint_in_place1, 55),
+                Cvik(33, "Zdvihy nôh v zavesení", "Extrémne", 40, R.drawable.hanging_leg_raise, R.drawable.hanging_leg_raise, 45),
+                Cvik(34, "Kliky do stojky pri stene", "Extrémne", 30, R.drawable.handstand_pushup, R.drawable.handstand_pushup1, 60),
+                Cvik(35, "Aligátorí plank", "Extrémne", 50, R.drawable.alligator_plank, R.drawable.alligator_plank, 45),
+                Cvik(36, "Výstupy na schod s výskokom", "Extrémne", 55, R.drawable.step_jump, R.drawable.step_jump1, 50),
+                Cvik(37, "Bear crawl", "Extrémne", 45, R.drawable.bear_crawl, R.drawable.bear_crawl1, 50),
+                Cvik(38, "Explozívne výpady", "Extrémne", 50, R.drawable.explosive_lunge, R.drawable.explosive_lunge1, 60)
+            )
+            for (cvik in extremneCviky) {
+                cvikRepository.insert(cvik)
+            }
+
         }
 
         setContent {
