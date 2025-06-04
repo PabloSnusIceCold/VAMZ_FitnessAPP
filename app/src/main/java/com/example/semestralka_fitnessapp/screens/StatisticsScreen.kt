@@ -25,7 +25,6 @@ fun StatisticsScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Pozadie
         Image(
             painter = painterResource(id = R.drawable.statistics_background),
             contentDescription = "Pozadie",
@@ -46,14 +45,13 @@ fun StatisticsScreen(
             }
         }
 
-        // Obsah štatistík
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.weight(0.3f)) // Posunie obsah dole o cca 30% výšky
+            Spacer(modifier = Modifier.weight(0.3f))
             Text(
                 text = "Tvoje Štatistiky",
                 style = MaterialTheme.typography.headlineLarge,
@@ -75,7 +73,7 @@ fun StatisticsScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )
-            Spacer(modifier = Modifier.weight(0.7f)) // Zvyšok priestoru vyplní dole
+            Spacer(modifier = Modifier.weight(0.7f))
         }
     }
 }

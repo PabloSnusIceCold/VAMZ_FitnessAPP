@@ -33,14 +33,12 @@ fun ClassicWorkoutScreen(
     val scrollState = rememberScrollState()
 
 
-    // Spusti tréning pri načítaní cvikov
     LaunchedEffect(cviky) {
         if (cviky.isNotEmpty()) {
             viewModel.startWorkout()
         }
     }
 
-    // Ak je tréning dokončený, prejdi na obrazovku s gratuláciou
     if (workoutFinished) {
         LaunchedEffect(Unit) {
             navController.navigate("congrats/${viewModel.getTotalCalories()}") {
@@ -54,7 +52,6 @@ fun ClassicWorkoutScreen(
                     .fillMaxSize()
                     .background(Color(0xFF004d40))
             ) {
-                // Tlačidlo SPÄŤ - nad všetkým a klikateľné
                 Button(
                     onClick = {
                         viewModel.endWorkout()
@@ -68,7 +65,6 @@ fun ClassicWorkoutScreen(
                     Text("← Späť", color = Color.White)
                 }
 
-                // Obsah vo vnútri - vertikálne scrollovateľný
                 Column(
                     modifier = Modifier
                         .fillMaxSize()

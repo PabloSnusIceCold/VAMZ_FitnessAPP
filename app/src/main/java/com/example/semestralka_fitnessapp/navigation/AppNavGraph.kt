@@ -109,12 +109,12 @@ fun AppNavGraph(
                     repositoryClassic = cvikRepository,
                     repositoryCustom = customWorkoutRepository,
                     statisticsRepository = statisticsRepository,
-                    jeKlasicky = false, // nie je klasický
-                    jeVyzva = true      // je výzva
+                    jeKlasicky = false,
+                    jeVyzva = true
                 )
             )
 
-            ClassicWorkoutScreen( // môžeš použiť rovnakú obrazovku ako pre klasický tréning
+            ClassicWorkoutScreen(
                 navController = navController,
                 viewModel = vyzvaViewModel
             )

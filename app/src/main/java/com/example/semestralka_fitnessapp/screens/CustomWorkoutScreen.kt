@@ -33,7 +33,6 @@ fun CustomWorkoutScreen(
     val scrollState = rememberScrollState()
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Tlačidlo SPÄŤ
         Button(
             onClick = { navController.navigate("menu") },
             modifier = Modifier
@@ -44,7 +43,6 @@ fun CustomWorkoutScreen(
             Text("← Späť", color = Color.White)
         }
 
-        // Obsah obrazovky
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -53,7 +51,6 @@ fun CustomWorkoutScreen(
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
 
-                // Kategórie
                 Column(modifier = Modifier.weight(1f)) {
                     Text("Kategórie", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
@@ -73,7 +70,6 @@ fun CustomWorkoutScreen(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Cviky
                 Column(modifier = Modifier.weight(1f)) {
                     Text("Cviky", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
@@ -93,7 +89,6 @@ fun CustomWorkoutScreen(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Pridanie cviku
                 Column(modifier = Modifier.weight(1f)) {
                     Text("Pridaj cvik", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))

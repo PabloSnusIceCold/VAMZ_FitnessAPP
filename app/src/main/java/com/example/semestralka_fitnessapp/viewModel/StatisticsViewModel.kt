@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.map
 
 class StatisticsViewModel(
-    private val repository: StatisticsRepository
+    repository: StatisticsRepository
 ) : ViewModel() {
 
     val statistics = repository.statisticsFlow

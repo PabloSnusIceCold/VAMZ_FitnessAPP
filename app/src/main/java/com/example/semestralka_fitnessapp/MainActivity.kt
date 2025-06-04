@@ -40,16 +40,14 @@ class MainActivity : ComponentActivity() {
         statisticsRepository = StatisticsRepository(database.statisticsDao())
         workoutRepository = CustomWorkoutRepository(database.customWorkoutDao())
 
-        // Inicializuj factory pre CvikViewModel
         viewModelFactory = CvikViewModelFactory(
             repositoryClassic = cvikRepository,
             repositoryCustom = workoutRepository,
             statisticsRepository = statisticsRepository,
-            jeKlasicky = true // alebo false – podľa toho, ktorú verziu chceš predvolene použiť
+            jeKlasicky = true
         )
 
 
-        // Predvolené cviky - vloženie do DB, ak je prázdna
         lifecycleScope.launch {
             val cviky = cvikRepository.allCviky.first()
             if (cviky.isEmpty()) {

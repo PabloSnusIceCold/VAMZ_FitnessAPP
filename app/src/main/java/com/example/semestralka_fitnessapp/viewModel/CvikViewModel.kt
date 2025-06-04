@@ -18,10 +18,9 @@ class CvikViewModel(
     private val statisticsRepository: StatisticsRepository,
     private val jeKlasicky: Boolean,
     private val jeVyzva: Boolean = false,
-    private val customWorkoutId: Int? = null // ID konkrétneho custom workoutu, ak je jeKlasicky false
+    private val customWorkoutId: Int? = null
 ) : ViewModel() {
 
-    // Tento flow bude obsahovať zoznam cvikov, ktoré budeme iterovať
     private val _cviky = mutableStateOf<List<Cvik>>(emptyList())
     val cviky: State<List<Cvik>> = _cviky
 
@@ -47,17 +46,14 @@ class CvikViewModel(
     init {
         viewModelScope.launch {
             if (jeVyzva) {
-                // Vyber 10 náhodných extrémnych cvikov
                 repositoryClassic.allCviky.collect { list ->
                     _cviky.value = list.filter { it.kategoria == "Extrémne" }.shuffled().take(10)
                 }
             } else if (jeKlasicky) {
-                // Klasický tréning bez extrémnych
                 repositoryClassic.allCviky.collect { list ->
                     _cviky.value = list.filter { it.kategoria != "Extrémne" }.shuffled().take(10)
                 }
             } else {
-                // Vlastný tréning
                 combine(
                     repositoryCustom.getAll(),
                     repositoryClassic.allCviky

@@ -18,7 +18,7 @@ data class CustomWorkoutExercise(
 )
 
 class CustomWorkoutViewModel(
-    private val repository: CvikRepository,
+    repository: CvikRepository,
     private val customWorkoutRepository: CustomWorkoutRepository
 ) : ViewModel() {
 
