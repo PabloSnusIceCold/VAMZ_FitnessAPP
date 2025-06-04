@@ -43,6 +43,15 @@ fun AppNavGraph(
             MenuScreen(navController)
         }
         composable("classicWorkout") {
+            val cvikViewModel: CvikViewModel = viewModel(
+                key = "classicWorkout",
+                factory = CvikViewModelFactory(
+                    repositoryClassic = cvikRepository,
+                    repositoryCustom = customWorkoutRepository,
+                    statisticsRepository = statisticsRepository,
+                    jeKlasicky = true
+                )
+            )
             ClassicWorkoutScreen(
                 navController = navController,
                 viewModel = cvikViewModel
@@ -90,6 +99,24 @@ fun AppNavGraph(
             CongratsScreen(
                 calories = calories,
                 onOkClicked = { navController.navigate("menu") }
+            )
+        }
+
+        composable("challengeWorkout") {
+            val vyzvaViewModel: CvikViewModel = viewModel(
+                key = "vyzvaViewModel",
+                factory = CvikViewModelFactory(
+                    repositoryClassic = cvikRepository,
+                    repositoryCustom = customWorkoutRepository,
+                    statisticsRepository = statisticsRepository,
+                    jeKlasicky = false, // nie je klasický
+                    jeVyzva = true      // je výzva
+                )
+            )
+
+            ClassicWorkoutScreen( // môžeš použiť rovnakú obrazovku ako pre klasický tréning
+                navController = navController,
+                viewModel = vyzvaViewModel
             )
         }
 

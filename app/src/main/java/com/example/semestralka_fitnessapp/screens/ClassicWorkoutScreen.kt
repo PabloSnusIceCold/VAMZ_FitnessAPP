@@ -32,6 +32,7 @@ fun ClassicWorkoutScreen(
     val currentCvik = cviky.getOrNull(currentIndex)
     val scrollState = rememberScrollState()
 
+
     // Spusti tréning pri načítaní cvikov
     LaunchedEffect(cviky) {
         if (cviky.isNotEmpty()) {

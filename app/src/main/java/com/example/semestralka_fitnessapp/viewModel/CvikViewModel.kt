@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.semestralka_fitnessapp.data.Cvik
 import com.example.semestralka_fitnessapp.repository.StatisticsRepository
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.*
 import com.example.semestralka_fitnessapp.repository.CustomWorkoutRepository
@@ -19,6 +17,7 @@ class CvikViewModel(
     private val repositoryCustom: CustomWorkoutRepository,
     private val statisticsRepository: StatisticsRepository,
     private val jeKlasicky: Boolean,
+    private val jeVyzva: Boolean = false,
     private val customWorkoutId: Int? = null // ID konkrétneho custom workoutu, ak je jeKlasicky false
 ) : ViewModel() {
 
@@ -47,12 +46,18 @@ class CvikViewModel(
 
     init {
         viewModelScope.launch {
-            if (jeKlasicky) {
+            if (jeVyzva) {
+                // Vyber 10 náhodných extrémnych cvikov
                 repositoryClassic.allCviky.collect { list ->
-                    _cviky.value = list.shuffled().take(10)
+                    _cviky.value = list.filter { it.kategoria == "Extrémne" }.shuffled().take(10)
+                }
+            } else if (jeKlasicky) {
+                // Klasický tréning bez extrémnych
+                repositoryClassic.allCviky.collect { list ->
+                    _cviky.value = list.filter { it.kategoria != "Extrémne" }.shuffled().take(10)
                 }
             } else {
-                // custom workout - kombinuj obe kolekcie, aby sa prepočítavali správne
+                // Vlastný tréning
                 combine(
                     repositoryCustom.getAll(),
                     repositoryClassic.allCviky
@@ -66,9 +71,7 @@ class CvikViewModel(
                             )
                         }
                         customCviky
-                    } else {
-                        emptyList()
-                    }
+                    } else emptyList()
                 }.collect { list ->
                     _cviky.value = list
                 }

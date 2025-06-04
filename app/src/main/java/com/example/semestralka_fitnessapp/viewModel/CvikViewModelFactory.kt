@@ -11,9 +11,9 @@ class CvikViewModelFactory(
     private val repositoryCustom: CustomWorkoutRepository,
     private val statisticsRepository: StatisticsRepository,
     private val jeKlasicky: Boolean,
+    private val jeVyzva: Boolean = false,
     private val customWorkoutId: Int? = null
 ) : ViewModelProvider.Factory {
-
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CvikViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
@@ -22,6 +22,7 @@ class CvikViewModelFactory(
                 repositoryCustom,
                 statisticsRepository,
                 jeKlasicky,
+                jeVyzva,
                 customWorkoutId
             ) as T
         }
