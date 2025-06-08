@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -41,7 +42,7 @@ fun StatisticsScreen(
             Button(onClick = {
                 navController.navigate("menu")
             }) {
-                Text("← Späť", color = Color.White)
+                Text(stringResource(id = R.string.back_arrow), color = Color.White)
             }
         }
 
@@ -53,23 +54,23 @@ fun StatisticsScreen(
         ) {
             Spacer(modifier = Modifier.weight(0.3f))
             Text(
-                text = "Tvoje Štatistiky",
+                text = stringResource(id = R.string.your_statistics),
                 style = MaterialTheme.typography.headlineLarge,
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = "Celkový čas: ${statistics.totalWorkoutTime} sekúnd",
+                text = stringResource(id = R.string.total_time, statistics.totalWorkoutTime),
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )
             Text(
-                text = "Spálené kalórie: ${statistics.totalCaloriesBurned} kcal",
+                text = stringResource(id = R.string.total_calories, statistics.totalCaloriesBurned),
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )
             Text(
-                text = "Vykonané cviky: ${statistics.totalExercisesDone}",
+                text = stringResource(id = R.string.total_exercises, statistics.totalExercisesDone),
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )

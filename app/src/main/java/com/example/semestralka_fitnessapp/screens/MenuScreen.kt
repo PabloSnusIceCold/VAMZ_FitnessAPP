@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,30 +41,30 @@ fun MenuScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Easy Fitness+",
+                text = stringResource(id = R.string.menu_title),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(32.dp))
             Button(onClick = { navController.navigate("classicWorkout") }, modifier = Modifier.fillMaxWidth()) {
-                Text("Preddefinovaný tréning")
+                Text(stringResource(id = R.string.classic_workout))
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { navController.navigate("customWorkout") }, modifier = Modifier.fillMaxWidth()) {
-                Text("Vytvor si vlastný tréning")
+                Text(stringResource(id = R.string.create_custom_workout))
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { navController.navigate("customWorkoutPlay") }, modifier = Modifier.fillMaxWidth()) {
-                Text("Spusti vlastný tréning")
+                Text(stringResource(id = R.string.start_custom_workout))
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { navController.navigate("challengeWorkout") }, modifier = Modifier.fillMaxWidth()) {
-                Text("Výzvy")
+                Text(stringResource(id = R.string.challenge_workout))
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { navController.navigate("statistics") }, modifier = Modifier.fillMaxWidth()) {
-                Text("Štatistiky")
+                Text(stringResource(id = R.string.statistics))
             }
         }
     }

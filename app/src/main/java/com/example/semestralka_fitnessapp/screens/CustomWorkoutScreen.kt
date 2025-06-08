@@ -13,8 +13,10 @@ import com.example.semestralka_fitnessapp.viewModel.CustomWorkoutViewModel
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import com.example.semestralka_fitnessapp.R
 
 @Composable
 fun CustomWorkoutScreen(
@@ -40,7 +42,7 @@ fun CustomWorkoutScreen(
                 .padding(16.dp)
                 .zIndex(1f)
         ) {
-            Text("← Späť", color = Color.White)
+            Text(text = stringResource(id = R.string.back_arrow), color = Color.White)
         }
 
         Column(
@@ -58,6 +60,7 @@ fun CustomWorkoutScreen(
                         val isSelected = category == selectedCategory
                         Text(
                             text = category,
+                            style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp)
@@ -77,6 +80,7 @@ fun CustomWorkoutScreen(
                         val isSelected = cvik == selectedCvik
                         Text(
                             text = cvik.nazov,
+                            style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp)
@@ -90,14 +94,14 @@ fun CustomWorkoutScreen(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Pridaj cvik", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(id = R.string.add_exercise), style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(
                         value = viewModel.repetitionsOrDuration,
                         onValueChange = { input ->
                             viewModel.repetitionsOrDuration = input.filter { it.isDigit() }
                         },
-                        label = { Text("Opakovania / Sekundy") },
+                        label = { Text(stringResource(id = R.string.repetitions_or_seconds)) },
                         singleLine = true
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -105,12 +109,12 @@ fun CustomWorkoutScreen(
                         onClick = { viewModel.addCvikToWorkout() },
                         enabled = selectedCvik != null && viewModel.repetitionsOrDuration.isNotEmpty()
                     ) {
-                        Text("Pridať cvik")
+                        Text(stringResource(id = R.string.add))
                     }
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    Text("Vlastný tréning:", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(id = R.string.custom_workout), style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     customWorkoutList.forEach {
                         Text("${it.cvik.nazov} - ${it.repetitionsOrDuration}")
@@ -121,7 +125,7 @@ fun CustomWorkoutScreen(
                         OutlinedTextField(
                             value = workoutName,
                             onValueChange = { viewModel.updateWorkoutName(it) },
-                            label = { Text("Názov tréningu") },
+                            label = { Text(stringResource(id = R.string.workout_name)) },
                             singleLine = true
                         )
 
@@ -134,7 +138,7 @@ fun CustomWorkoutScreen(
                             },
                             enabled = workoutName.isNotBlank()
                         ) {
-                            Text("Uložiť tréning")
+                            Text(stringResource(id = R.string.save_workout))
                         }
                     }
                 }
@@ -142,12 +146,16 @@ fun CustomWorkoutScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Text("Uložené tréningy:", style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = stringResource(R.string.saved_workouts),
+                style = MaterialTheme.typography.titleLarge
+            )
             Spacer(modifier = Modifier.height(8.dp))
             allSavedWorkouts.forEach { workout ->
-                Text("• ${workout.name}")
+                Text(
+                    text = stringResource(R.string.point) + " " + workout.name
+                )
             }
         }
     }
 }
-

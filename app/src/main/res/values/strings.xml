@@ -1,6 +1,39 @@
 <resources>
     <string name="app_name">Semestralka_FitnessAPP</string>
+
+    <string name="back_arrow">← Späť</string>
+
     <string name="congrats_title">Gratulujeme!</string>
-    <string name="congrats_message">Spálili ste %1$d kalórií za %2$d sekúnd.</string>
+    <string name="congrats_message">Spálili ste %1$d kalórií.</string>
     <string name="ok_button">OK</string>
+
+    <string name="current_exercise">Aktuálny cvik: %1$s</string>
+    <string name="remaining_time">Zostávajúci čas: %1$ds</string>
+    <string name="restart_workout">Reštartovať tréning</string>
+    <string name="skip_exercise">Preskočiť cvik</string>
+
+    <string name="add_exercise">Pridaj cvik</string>
+    <string name="repetitions_or_seconds">Opakovania / Sekundy</string>
+    <string name="add">Pridať cvik</string>
+    <string name="custom_workout">Vlastný tréning:</string>
+    <string name="workout_name">Názov tréningu</string>
+    <string name="save_workout">Uložiť tréning</string>
+    <string name="saved_workouts">Uložené tréningy:</string>
+    <string name="point">•</string>
+
+    <string name="menu_title">Easy Fitness+</string>
+    <string name="classic_workout">Preddefinovaný tréning</string>
+    <string name="create_custom_workout">Vytvor si vlastný tréning</string>
+    <string name="start_custom_workout">Spusti vlastný tréning</string>
+    <string name="challenge_workout">Výzvy</string>
+    <string name="statistics">Štatistiky</string>
+
+    <string name="your_statistics">Tvoje Štatistiky</string>
+    <string name="total_time">Celkový čas: %1$d sekúnd</string>
+    <string name="total_calories">Spálené kalórie: %1$d kcal</string>
+    <string name="total_exercises">Vykonané cviky: %1$d</string>
+
+    <string name="choose_workout">Vyber si tréning</string>
+    <string name="training">Tréning: %1$s</string>
+    <string name="exercise_count">Počet cvikov: %1$d</string>
 </resources>

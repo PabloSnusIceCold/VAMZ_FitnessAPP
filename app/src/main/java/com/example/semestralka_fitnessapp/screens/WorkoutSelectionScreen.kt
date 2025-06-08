@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.semestralka_fitnessapp.R
 import com.example.semestralka_fitnessapp.viewModel.CustomWorkoutViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,7 +21,7 @@ fun WorkoutSelectionScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Vyber si tréning") })
+            TopAppBar(title = { Text(stringResource(id = R.string.choose_workout)) })
         }
     ) { paddingValues ->
         Column(modifier = Modifier
@@ -35,8 +37,8 @@ fun WorkoutSelectionScreen(
                         }
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = "Tréning: ${workout.name}", style = MaterialTheme.typography.titleMedium)
-                        Text(text = "Počet cvikov: ${workout.exerciseIds.size}")
+                        Text(text = stringResource(id = R.string.training, workout.name))
+                        Text(text = stringResource(id = R.string.exercise_count, workout.exerciseIds.size))
                     }
                 }
             }

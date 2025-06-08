@@ -12,10 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.semestralka_fitnessapp.R
 import com.example.semestralka_fitnessapp.viewModel.CvikViewModel
 
 @Composable
@@ -62,7 +64,7 @@ fun ClassicWorkoutScreen(
                         .padding(16.dp)
                         .zIndex(1f)
                 ) {
-                    Text("← Späť", color = Color.White)
+                    Text(text = stringResource(id = R.string.back_arrow), color = Color.White)
                 }
 
                 Column(
@@ -74,13 +76,13 @@ fun ClassicWorkoutScreen(
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     Text(
-                        text = "Aktuálny cvik: ${cvik.nazov}",
+                        text = stringResource(id = R.string.current_exercise, cvik.nazov),
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White
                     )
 
                     Text(
-                        text = "Zostávajúci čas: ${remainingTime}s",
+                        text = stringResource(id = R.string.remaining_time, remainingTime),
                         style = MaterialTheme.typography.bodyLarge,
                         color = Color.White
                     )
@@ -118,11 +120,11 @@ fun ClassicWorkoutScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Button(onClick = { viewModel.resetWorkout() }) {
-                            Text("Reštartovať tréning")
+                            Text(text = stringResource(id = R.string.restart_workout))
                         }
 
                         Button(onClick = { viewModel.skipCurrentExercise() }) {
-                            Text("Preskočiť cvik")
+                            Text(text = stringResource(id = R.string.skip_exercise))
                         }
                     }
                 }
